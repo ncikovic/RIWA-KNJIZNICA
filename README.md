@@ -1,3 +1,3 @@
 # PROJEKT KNJIŽNICA
-## Kolegij Razvoj interaktivnih web aplikacija
+## Kolegij *Razvoj interaktivnih web aplikacija*
 
