@@ -6,8 +6,8 @@
 </template>
 
 <script>
-import { ref, onMounted } from 'vue';
-import * as L from 'leaflet';
+import { ref, onMounted } from "vue";
+import * as L from "leaflet";
 import "leaflet/dist/leaflet.css";
 
 export default {
@@ -16,19 +16,19 @@ export default {
 
     onMounted(() => {
       // Inicijalizacija mape
-      initialMap.value = L.map('map').setView([45.3312, 14.4322], 13);
+      initialMap.value = L.map("map").setView([45.3312, 14.4322], 13);
 
       // Dodavanje OpenStreetMap pločica
-      L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+      L.tileLayer("https://tile.openstreetmap.org/{z}/{x}/{y}.png", {
         maxZoom: 19,
-        attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+        attribution:
+          '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
       }).addTo(initialMap.value);
     });
 
     return {
-      initialMap
+      initialMap,
     };
-  }
+  },
 };
 </script>
-
