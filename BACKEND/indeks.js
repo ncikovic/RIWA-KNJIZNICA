@@ -32,8 +32,8 @@ app.listen(port, () => {
   console.log("Server running at port: " + port);
 });
 
-app.get("/api/knjige", (req, res) => {
-  connection.query("SELECT * FROM knjige", (error, results) => {
+app.get("/api/knjiga", (req, res) => {
+  connection.query("SELECT * FROM knjiga", (error, results) => {
     if (error) throw error;
     res.send(results);
   });
@@ -43,15 +43,25 @@ app.get("/api/knjige", (req, res) => {
 
     npm install -g nodemon
     */
-  response.send("popis_knjiga");
+  //res.send("popis_knjiga");
 });
 
-app.get("/api/knjige/:id", (request, response) => {
+app.get("/api/knjiga/:id", (request, response) => {
   const id = request.params.id;
-  response.send("jedna knjiga" + id);
+  response.send("jedna knjiga " + id);
 });
 
-app.post("/api/rezerv_knjige", (req, res) => {
+app.get("/api/rezervacija", (req, res) => {
+  const query =
+    "    SELECT knjiga.naslov, knjiga.autor, korisnik.ime AS korisnik, rezervacija.datum_rez FROM rezervacija " +
+    "JOIN knjiga ON rezervacija.knjiga = knjiga.id JOIN korisnik ON rezervacija.korisnik = korisnik.id;";
+  connection.query(query, (error, results) => {
+    if (error) throw error;
+    res.send(results);
+  });
+});
+
+app.post("/api/rezerv_knjiga", (req, res) => {
   const data = req.body;
   rezervacija = [[date.today, data.id_knjiga, data.id_korisnik]];
 
@@ -67,7 +77,7 @@ app.post("/api/rezerv_knjige", (req, res) => {
   //response.send("Poslano" + data.id_knjiga);
 });
 
-app.get("/api/knjige/naslov/:naslov", (req, res) => {
+app.get("/api/knjiga/naslov/:naslov", (req, res) => {
   const naslov = req.params.naslov;
   connection.query(
     "SELECT * FROM knjiga WHERE naslov LIKE ?",
@@ -79,7 +89,7 @@ app.get("/api/knjige/naslov/:naslov", (req, res) => {
   );
 });
 
-app.get("/api/knjige/autor/:autor", (req, res) => {
+app.get("/api/knjiga/autor/:autor", (req, res) => {
   const autor = req.params.autor;
   connection.query(
     "SELECT * FROM knjiga WHERE autor LIKE ?",
@@ -91,7 +101,7 @@ app.get("/api/knjige/autor/:autor", (req, res) => {
   );
 });
 
-app.get("/api/slob_knjige", (req, res) => {
+app.get("/api/slob_knjiga", (req, res) => {
   const query = `
     SELECT (knjiga.stanje - COUNT(rezervacija.knjiga)) AS slobodne, knjiga.id, knjiga.naslov, knjiga.stanje 
     FROM knjiga 
@@ -105,8 +115,8 @@ app.get("/api/slob_knjige", (req, res) => {
   });
 });
 
-app.get("/api/slob_knjige/:id_knjige", (req, res) => {
-  const id_knjige = req.params.id_knjige;
+app.get("/api/slob_knjige/:id_knjiga", (req, res) => {
+  const id_knjige = req.params.id_knjiga;
   const query = `
     SELECT (knjiga.stanje - COUNT(rezervacija.knjiga)) AS slobodne 
     FROM knjiga 
@@ -114,7 +124,7 @@ app.get("/api/slob_knjige/:id_knjige", (req, res) => {
     WHERE knjiga.id = ?
     GROUP BY knjiga.id;
   `;
-  connection.query(query, [id_knjige], (error, results) => {
+  connection.query(query, [id_knjiga], (error, results) => {
     if (error) throw error;
     res.send(results);
   });

@@ -11,25 +11,15 @@
           @click="toggleLeftDrawer"
         />
 
-        <q-toolbar-title class="text-h2">
-          KNJIŽNICA
-        </q-toolbar-title>
+        <q-toolbar-title class="text-h2"> KNJIŽNICA </q-toolbar-title>
 
         <div>Quasar v{{ $q.version }}</div>
       </q-toolbar>
     </q-header>
 
-    <q-drawer
-      v-model="leftDrawerOpen"
-      show-if-above
-      bordered
-    >
+    <q-drawer v-model="leftDrawerOpen" show-if-above bordered>
       <q-list>
-        <q-item-label
-          header
-        >
-          Essential Links
-        </q-item-label>
+        <q-item-label header> Essential Links </q-item-label>
 
         <EssentialLink
           v-for="link in linksList"
@@ -46,61 +36,73 @@
 </template>
 
 <script setup>
-import { ref } from 'vue'
-import EssentialLink from 'components/EssentialLink.vue'
+import { ref } from "vue";
+import EssentialLink from "components/EssentialLink.vue";
 
 defineOptions({
-  name: 'MainLayout'
-})
+  name: "MainLayout",
+});
 
 const linksList = [
   {
-    title: 'Početna',
-    caption: 'Početna stranica',
-    icon: 'home',
-    link: '#/'
+    title: "Početna",
+    caption: "Početna stranica",
+    icon: "home",
+    link: "#/",
   },
   {
-    title: 'Popis knjiga',
-    caption: 'Popis svih knjiga u knjižnici',
-    icon: 'book',
-    link: '#/popisKnjiga'
+    title: "Popis knjiga",
+    caption: "Popis svih knjiga u knjižnici",
+    icon: "book",
+    link: "#/popisKnjiga",
   },
   {
-    title: 'Pretraživanje ',
-    caption: 'Tražiš knjigu?',
-    icon: 'search',
-    link: '#/Pretrazivanje'
+    title: "Popis knjiga - baza",
+    caption: "Baza knjiga",
+    icon: "book",
+    link: "#/PopisKnjigaBaza",
   },
   {
-    title: 'O nama',
-    caption: 'o_nama',
-    icon: 'record_voice_over',
-    link: '#/O_nama'
+    title: "Rezervirane Knjige",
+    caption: "Rezervirane knjige",
+    icon: "book",
+    link: "#/RezerviraneKnjige",
   },
   {
-    title: 'Lokacija',
-    caption: 'Gdje se nalazimo?',
-    icon: 'pin_drop',
-    link: '#/Lokacija'
+    title: "Pretraživanje ",
+    caption: "Tražiš knjigu?",
+    icon: "search",
+    link: "#/Pretrazivanje",
   },
   {
-    title: 'Login',
-    caption: 'Prijava korisnika',
-    icon: 'login',
-    link: '#/Login'
+    title: "O nama",
+    caption: "o_nama",
+    icon: "record_voice_over",
+    link: "#/O_nama",
   },
   {
-    title: 'Registracija',
-    caption: 'Registracija korisnika',
-    icon: 'app_registration',
-    link: '#/Registracija'
-  }
-]
+    title: "Lokacija",
+    caption: "Gdje se nalazimo?",
+    icon: "pin_drop",
+    link: "#/Lokacija",
+  },
+  {
+    title: "Login",
+    caption: "Prijava korisnika",
+    icon: "login",
+    link: "#/Login",
+  },
+  {
+    title: "Registracija",
+    caption: "Registracija korisnika",
+    icon: "app_registration",
+    link: "#/Registracija",
+  },
+];
 
-const leftDrawerOpen = ref(false)
+const leftDrawerOpen = ref(false);
 
-function toggleLeftDrawer () {
-  leftDrawerOpen.value = !leftDrawerOpen.value
+function toggleLeftDrawer() {
+  leftDrawerOpen.value = !leftDrawerOpen.value;
 }
 </script>
