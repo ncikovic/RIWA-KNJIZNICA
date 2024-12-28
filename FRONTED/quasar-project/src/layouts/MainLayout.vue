@@ -1,6 +1,7 @@
 <template>
   <q-layout view="lHh Lpr lFf">
-    <q-header elevated>
+    <!-- Zaglavlje sa nazivom -->
+    <q-header elevated class="bg-midnight-blue text-white">
       <q-toolbar>
         <q-btn
           flat
@@ -10,26 +11,44 @@
           aria-label="Menu"
           @click="toggleLeftDrawer"
         />
-
-        <q-toolbar-title class="text-h2"> KNJIŽNICA </q-toolbar-title>
-
-        <div>Quasar v{{ $q.version }}</div>
+        <q-toolbar-title class="text-h2">KNJIŽNICA</q-toolbar-title>
       </q-toolbar>
     </q-header>
 
-    <q-drawer v-model="leftDrawerOpen" show-if-above bordered>
+    <!-- Drawer sa navigacijom -->
+    <q-drawer
+      v-model="leftDrawerOpen"
+      show-if-above
+      bordered
+      class="bg-midnight-blue text-white"
+    >
       <q-list>
-        <q-item-label header> Essential Links </q-item-label>
+        <q-item-label header class="text-h6 text-center text-white"
+          >Gradska knjižnica Rijeka</q-item-label
+        >
 
-        <EssentialLink
+        <q-item
           v-for="link in linksList"
           :key="link.title"
-          v-bind="link"
-        />
+          clickable
+          @click="navigateTo(link.route)"
+          class="nav-item"
+        >
+          <q-item-section avatar>
+            <q-icon :name="link.icon" size="xl" />
+          </q-item-section>
+          <q-item-section>
+            <q-item-label class="text-white">{{ link.title }}</q-item-label>
+            <q-item-label caption class="text-grey-4">{{
+              link.caption
+            }}</q-item-label>
+          </q-item-section>
+        </q-item>
       </q-list>
     </q-drawer>
 
-    <q-page-container>
+    <!-- Glavni sadržaj -->
+    <q-page-container class="page-background">
       <router-view />
     </q-page-container>
   </q-layout>
@@ -37,66 +56,61 @@
 
 <script setup>
 import { ref } from "vue";
-import EssentialLink from "components/EssentialLink.vue";
+import { useRouter } from "vue-router";
 
 defineOptions({
   name: "MainLayout",
 });
 
 const linksList = [
-  {
-    title: "Početna",
-    caption: "Početna stranica",
-    icon: "home",
-    link: "#/",
-  },
+  { title: "Početna", caption: "Početna stranica", icon: "home", route: "/" },
   {
     title: "Popis knjiga",
     caption: "Popis svih knjiga u knjižnici",
     icon: "book",
-    link: "#/popisKnjiga",
+    route: "/popisKnjiga",
   },
   {
     title: "Popis knjiga - baza",
     caption: "Baza knjiga",
     icon: "book",
-    link: "#/PopisKnjigaBaza",
+    route: "/PopisKnjigaBaza",
   },
   {
     title: "Rezervirane Knjige",
     caption: "Rezervirane knjige",
     icon: "book",
-    link: "#/RezerviraneKnjige",
+    route: "/RezerviraneKnjige",
   },
   {
-    title: "Pretraživanje ",
+    title: "Pretraživanje",
     caption: "Tražiš knjigu?",
     icon: "search",
-    link: "#/Pretrazivanje",
+    route: "/Pretrazivanje",
   },
   {
     title: "O nama",
-    caption: "o_nama",
+    caption: "O nama",
     icon: "record_voice_over",
-    link: "#/O_nama",
+    route: "/O_nama",
   },
   {
     title: "Lokacija",
     caption: "Gdje se nalazimo?",
     icon: "pin_drop",
-    link: "#/Lokacija",
+    route: "/Lokacija",
   },
   {
     title: "Login",
     caption: "Prijava korisnika",
     icon: "login",
-    link: "#/Login",
+    route: "/Login",
   },
   {
     title: "Registracija",
     caption: "Registracija korisnika",
     icon: "app_registration",
-    link: "#/Registracija",
+    route: "/Registracija",
   },
 ];
 
@@ -105,4 +119,56 @@ const leftDrawerOpen = ref(false);
 function toggleLeftDrawer() {
   leftDrawerOpen.value = !leftDrawerOpen.value;
 }
+
+const router = useRouter();
+function navigateTo(route) {
+  router.push(route);
+}
 </script>
+
+<style scoped>
+/* Glavna pozadinska boja - Midnight Blue */
+.page-background {
+  background-color: #cfcfcf;
+  color: white;
+}
+
+/* Styling za navigacijski izbornik */
+.bg-midnight-blue {
+  background-color: #10105a; /* Midnight Blue */
+}
+
+.text-white {
+  color: #ffffff;
+}
+
+.text-grey-4 {
+  color: #cecece;
+}
+
+.nav-item {
+  transition: background-color 0.3s ease;
+}
+
+.nav-item:hover {
+  background-color: #200202e3;
+}
+
+.q-drawer .q-item {
+  border-bottom: 1px solid #122849;
+}
+
+.q-item-label {
+  font-size: 16px;
+}
+
+/* Za centriranje naslova u izborniku */
+.q-item-label.header {
+  text-align: center;
+}
+
+/* Veći ikone u izborniku */
+.q-icon {
+  color: #10105a;
+}
+</style>

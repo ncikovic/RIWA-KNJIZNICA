@@ -8,15 +8,16 @@ const port = 3000;
 
 // Parser za JSON podatke
 app.use(bodyParser.json());
+app.use(cors());
 
 // Parser za podatke iz formi
 app.use(bodyParser.urlencoded({ extended: true }));
 
 const connection = mysql.createConnection({
   host: "student.veleri.hr",
-  user: "ncikovic",
+  user: "riwa",
   password: "11",
-  database: "ncikovic",
+  database: "riwa",
 });
 
 app.use(express.urlencoded({ extended: true }));
@@ -61,20 +62,18 @@ app.get("/api/rezervacija", (req, res) => {
   });
 });
 
-app.post("/api/rezerv_knjiga", (req, res) => {
+app.post("/api/unos_knjiga", (req, res) => {
   const data = req.body;
-  rezervacija = [[date.today, data.id_knjiga, data.id_korisnik]];
+  knjiga = [[data.naslov, data.autor, data.opis, data.slika, data.stanje]];
 
   connection.query(
-    "INSERT INTO rezervacija (datum, knjiga, korisnik) VALUES ?",
-    [rezervacija],
+    "INSERT INTO knjiga (naslov, autor, opis, slika, stanje) VALUES ?",
+    [knjiga],
     (error, results) => {
       if (error) throw error;
       res.send(results);
     }
   );
-
-  //response.send("Poslano" + data.id_knjiga);
 });
 
 app.get("/api/knjiga/naslov/:naslov", (req, res) => {

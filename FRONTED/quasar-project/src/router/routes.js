@@ -6,57 +6,55 @@ const routes = [
       { path: "", component: () => import("pages/IndexPage.vue") },
       {
         path: "/popisKnjiga",
-        component: () => {
-          return import("pages/PopisKnjigaPage.vue");
-        },
-      },
-      {
-        path: "/PopisKnjigaBaza",
-        component: () => {
-          return import("pages/PopisKnjigaBazaPage.vue");
-        },
+        component: () => import("pages/PopisKnjigaPage.vue"),
       },
       {
         path: "/Pretrazivanje",
-        component: () => {
-          return import("pages/PretrazivanjePage.vue");
-        },
+        component: () => import("pages/PretrazivanjePage.vue"),
       },
-      {
-        path: "/RezerviraneKnjige",
-        component: () => {
-          return import("pages/RezerviraneKnjige.vue");
-        },
-      },
-      {
-        path: "/O_nama",
-        component: () => {
-          return import("pages/O_namaPage.vue");
-        },
-      },
-      {
-        path: "/Lokacija",
-        component: () => {
-          return import("pages/LokacijaPage.vue");
-        },
-      },
-      {
-        path: "/Login",
-        component: () => {
-          return import("pages/LoginPage.vue");
-        },
-      },
+      { path: "/O_nama", component: () => import("pages/O_namaPage.vue") },
+      { path: "/Lokacija", component: () => import("pages/LokacijaPage.vue") },
+      { path: "/Login", component: () => import("pages/LoginPage.vue") },
       {
         path: "/Registracija",
-        component: () => {
-          return import("pages/RegistracijaPage.vue");
-        },
+        component: () => import("pages/RegistracijaPage.vue"),
+      },
+      {
+        path: "/PopisKnjigaBaza",
+        component: () => import("pages/PopisKnjigaBazaPage.vue"),
+      },
+      {
+        path: "/Rezervacija",
+        component: () => import("pages/RezervacijaPage.vue"),
       },
     ],
   },
 
-  // Always leave this as last one,
-  // but you can also remove it
+  {
+    path: "/admin",
+    component: () => import("layouts/AdminLayout.vue"),
+    children: [
+      { path: "", component: () => import("pages/IndexPage.vue") },
+      {
+        path: "/admin/popisKnjiga",
+        component: () => import("pages/PopisKnjigaPage.vue"),
+      },
+      {
+        path: "/admin/Pretrazivanje",
+        component: () => import("pages/PretrazivanjePage.vue"),
+      },
+      {
+        path: "/admin/PopisKorisnika",
+        component: () => import("pages/PopisKorisnikaPage.vue"),
+      },
+      {
+        path: "/admin/UnosKnjiga",
+        component: () => import("pages/UnosKnjigaPage.vue"),
+      },
+      { path: "/Logout", component: () => import("pages/LogoutPage.vue") },
+    ],
+  },
+
   {
     path: "/:catchAll(.*)*",
     component: () => import("pages/ErrorNotFound.vue"),
